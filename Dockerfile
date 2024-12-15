@@ -33,7 +33,7 @@ RUN yarn install && \
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE ${VITE_TLDRAW_PORT}
+EXPOSE ${PORT_TLDRAW_SYNC}
 
 # Command to run only the Bun server
 CMD ["yarn", "dev-server-bun"]

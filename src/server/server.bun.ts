@@ -14,7 +14,7 @@ import { makeOrLoadRoom } from './rooms'
 import { unfurl } from './unfurl'
 import { server_schema_default, server_schema_custom } from './schema'
 
-const PORT = process.env.VITE_TLDRAW_PORT
+const PORT = process.env.PORT_TLDRAW_SYNC
 
 const { corsify, preflight } = cors({ origin: '*' })
 
