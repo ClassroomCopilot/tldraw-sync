@@ -1,21 +1,6 @@
 {
-	"name": "@cc/tldraw-sync",
-	"description": "A classroom copilot server for tldraw (example node/bun servers).",
-	"version": "0.0.0",
-	"private": true,
-	"packageManager": "yarn@4.0.2",
-	"main": "./src/server/server.ts",
 	"scripts": {
-		"dev-server-bun": "npx bun --watch ./src/server/server.bun.ts"
-	},
-	"jest": {
-		"preset": "config/jest/node",
-		"moduleNameMapper": {
-			"^~(.*)": "<rootDir>/src/$1"
-		},
-		"transformIgnorePatterns": [
-			"node_modules/(?!(nanoid|escape-string-regexp)/)"
-		]
+		"dev-server-bun": "bun --watch ./src/server/server.bun.ts"
 	},
 	"dependencies": {
 		"@dagrejs/dagre": "^1.1.4",

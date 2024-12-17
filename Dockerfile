@@ -9,10 +9,6 @@ RUN apt-get update && \
 # Add Bun to PATH
 ENV PATH="/root/.bun/bin:${PATH}"
 
-# Enable Corepack and use correct Yarn version
-RUN corepack enable && \
-    corepack prepare yarn@4.0.2 --activate
-
 # Set working directory
 WORKDIR /app
 
@@ -25,15 +21,20 @@ RUN echo '[runtime]' > bunfig.toml && \
     echo 'jsx-runtime = "automatic"' >> bunfig.toml && \
     echo 'jsx-import-source = "react"' >> bunfig.toml
 
-# Install dependencies including Bun
-RUN yarn install && \
-    bun install react
+# Install dependencies using bun instead of npm
+RUN bun install
 
 # Copy the tldraw-sync code
 COPY . .
 
+# Create logs directory
+RUN mkdir -p /app/logs && chmod 777 /app/logs
+
 # Expose the port the app runs on
 EXPOSE ${PORT_TLDRAW_SYNC}
 
+# Set environment variables
+ENV LOG_PATH=/app/logs
+
 # Command to run only the Bun server
-CMD ["yarn", "dev-server-bun"]
+CMD ["bun", "run", "dev-server-bun"]
