@@ -21,14 +21,6 @@ export type SlideLayoutBinding = TLBaseBinding<
   }
 >
 
-type SlideWithDetails = {
-    id: TLShapeId
-    shape: SlideShape
-    index: number
-    position: { x: number; y: number }
-    binding: SlideLayoutBinding | undefined
-}
-
 export class SlideLayoutBindingUtil extends BindingUtil<SlideLayoutBinding> {
   static type = 'slide-layout' as const
   

@@ -35,7 +35,9 @@ class DebugLogger {
     }
 
     log(level: LogLevel, category: LogCategory, message: string, data?: any) {
-        if (!this.shouldLog(level, category)) return
+        if (!this.shouldLog(level, category)) {
+          return
+        }
 
         const timestamp = new Date().toISOString()
         const prefix = `[${timestamp}] [${level.toUpperCase()}] [${category}]`
