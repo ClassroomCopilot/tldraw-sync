@@ -11,12 +11,10 @@ export function SnapshotToolbar({ pathFromCalendar, children }: { pathFromCalend
         const snapshot = getSnapshot(editor.store);
         localStorage.setItem('snapshot', JSON.stringify(snapshot));
         const { document, session } = snapshot;
-        const isDev = import.meta.env.VITE_DEV === 'true';
-        const multiplayerHomePath = isDev
-            ? import.meta.env.VITE_DEVMULTIPLAYERHOMEPATH
-            : import.meta.env.VITE_MULTIPLAYERHOMEPATH
+
+        const multiplayerHomePath = import.meta.env.VITE_MULTIPLAYERHOMEPATH
         const multiplayerHomeFilePath = multiplayerHomePath.replace(/\\/g, '/') + '/tldraw_home.json';
-        axios.post(`/database/tldraw_fs/set_tldraw_user_file${multiplayerHomeFilePath}`, { document, session })
+        axios.post(`/api/database/tldraw_fs/set_tldraw_user_file${multiplayerHomeFilePath}`, { document, session })
             .then(() => {
                 console.log('Snapshot saved successfully');
                 addToast({
