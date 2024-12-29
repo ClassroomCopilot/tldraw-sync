@@ -7,7 +7,7 @@ export default defineConfig(() => ({
 	root: path.join(__dirname, 'src/client'),
 	publicDir: path.join(__dirname, 'public'),
 	server: {
-		port: 5555,
+		port: 5000,
 		host: '0.0.0.0', // Expose the server to the network
 	},
 	optimizeDeps: {

@@ -1,12 +1,9 @@
 // External imports
-import { TLSocketRoom, RoomStoreMethods } from '@tldraw/sync-core'
+import { TLSocketRoom } from '@tldraw/sync-core'
 import { IRequest, Router, RouterType, cors, json } from 'itty-router'
 import { Readable } from 'stream'
 import { 
-  DEFAULT_EMBED_DEFINITIONS,
   createTLStore,
-  TLStore,
-  TLStoreOptions,
 } from 'tldraw'
 // Internal imports
 import { loadAsset, storeAsset } from './assets'
@@ -22,10 +19,7 @@ const { corsify, preflight } = cors({ origin: '*' })
 const router: RouterType<IRequest, any, any> = Router()
   .all('*', preflight)
 
-const includeProxyRoute = "/tldraw"
-
-router
-  .get(`${includeProxyRoute}/connect/:roomId`, async (req) => {
+  .get(`/connect/:roomId`, async (req) => {
     const roomId = req.params.roomId
     const sessionId = req.query.sessionId
     logger.info(`Connecting to room: ${roomId}, session: ${sessionId}`)
@@ -33,7 +27,7 @@ router
     return new Response(null, { status: 101 })
   })
 
-  .put(`${includeProxyRoute}/uploads/:id`, async (req) => {
+  .put(`/uploads/:id`, async (req) => {
     const id = req.params.id;
     logger.info(`Received upload request for ID: ${id}`);
 
@@ -57,7 +51,7 @@ router
     }
   })
 
-  .get(`${includeProxyRoute}/uploads/:id`, async (req) => {
+  .get(`/uploads/:id`, async (req) => {
     const id = (req.params as any).id as string
     logger.info(`Received request to load asset with ID: ${id}`)
     try {
@@ -72,7 +66,7 @@ router
     }
   })
 
-  .get(`${includeProxyRoute}/unfurl`, async (req) => {
+  .get(`/unfurl`, async (req) => {
     const url = (req.query as any).url as string
     logger.info(`Received unfurl request for URL: ${url}`)
     try {
@@ -93,10 +87,6 @@ router
     response.headers.set('Access-Control-Allow-Origin', '*'); // TODO: Unsafe, change
     return response;
   })
-
-const store = createTLStore({
-  schema: server_schema_custom,
-})
 
 const server = Bun.serve<{ room?: TLSocketRoom<any, void>; sessionId: string; roomId: string }>({
   port: PORT,
@@ -119,32 +109,73 @@ const server = Bun.serve<{ room?: TLSocketRoom<any, void>; sessionId: string; ro
       try {
         const { sessionId, roomId } = socket.data;
         if (!sessionId || !roomId) {
-          logger.error('Missing sessionId or roomId in WebSocket connection data');
+          logger.error('Missing sessionId or roomId in WebSocket connection data', {
+            sessionId,
+            roomId
+          });
           socket.close(4000, 'Missing data');
           return;
         }
         logger.info(`WebSocket opened for room: ${roomId}, session: ${sessionId}`);
         const room = await makeOrLoadRoom(roomId, server_schema_custom);
+        if (!room) {
+          logger.error('Failed to create or load room', {
+            roomId,
+            sessionId
+          });
+          socket.close(4001, 'Failed to load room');
+          return;
+        }
         room.handleSocketConnect({ sessionId, socket });
         socket.data.room = room;
+        logger.info(`Successfully connected to room: ${roomId}`, {
+          sessionId,
+          roomId
+        });
       } catch (error) {
         logger.error('Error during WebSocket open:', error);
         socket.close(1011, 'Internal error');
       }
     },
     async message(ws, message) {
-      logger.info(`WebSocket message for session: ${ws.data.sessionId}`, message)
-      ws.data.room?.handleSocketMessage(ws.data.sessionId, message)
+      try {
+        logger.debug(`WebSocket message for session: ${ws.data.sessionId}`, {
+          message,
+          roomId: ws.data.roomId
+        });
+        if (!ws.data.room) {
+          logger.error('No room found for WebSocket message', {
+            sessionId: ws.data.sessionId,
+            roomId: ws.data.roomId
+          });
+          ws.close(4002, 'No room found');
+          return;
+        }
+        ws.data.room.handleSocketMessage(ws.data.sessionId, message);
+      } catch (error) {
+        logger.error('Error handling WebSocket message:', error);
+        ws.close(1011, 'Message handling error');
+      }
     },
     drain(ws) {
-      logger.info(`WebSocket drain for session: ${ws.data.sessionId}`)
-      ws.close()
+      logger.info(`WebSocket drain for session: ${ws.data.sessionId}`, {
+        roomId: ws.data.roomId
+      });
+      ws.close();
     },
     close(ws) {
-      logger.info(`WebSocket closed for session: ${ws.data.sessionId}`)
-      ws.data.room?.handleSocketClose(ws.data.sessionId)
+      logger.info(`WebSocket closed for session: ${ws.data.sessionId}`, {
+        roomId: ws.data.roomId
+      });
+      if (ws.data.room) {
+        ws.data.room.handleSocketClose(ws.data.sessionId);
+      }
     },
   },
 })
 
 logger.info(`Listening for connections on URL: ${server.url}`)
+
+logger.info(`Listening on localhost:${PORT}`)
+
+logger.info(`Server: ${server}`)

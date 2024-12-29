@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"dev-server-bun": "bun --watch ./src/server/server.bun.ts"
+		"dev-server-bun": "npx bun --watch ./src/server/server.bun.ts"
 	},
 	"dependencies": {
 		"@dagrejs/dagre": "^1.1.4",
