@@ -12,8 +12,8 @@ ENV PATH="/root/.bun/bin:${PATH}"
 # Set working directory
 WORKDIR /app
 
-# Copy the Docker-specific package.json from init directory
-COPY ./init/package.json ./package.json
+# Copy package files first
+COPY package*.json ./
 
 # Create bunfig.toml with proper JSX configuration
 RUN echo '[runtime]' > bunfig.toml && \
@@ -21,10 +21,10 @@ RUN echo '[runtime]' > bunfig.toml && \
     echo 'jsx-runtime = "automatic"' >> bunfig.toml && \
     echo 'jsx-import-source = "react"' >> bunfig.toml
 
-# Install dependencies using bun instead of npm
+# Install dependencies using bun
 RUN bun install
 
-# Copy the tldraw-sync code
+# Copy the rest of the application code
 COPY . .
 
 # Create logs directory
@@ -36,5 +36,5 @@ EXPOSE ${PORT_TLDRAW_SYNC}
 # Set environment variables
 ENV LOG_PATH=/app/logs
 
-# Command to run only the Bun server
+# Command to run the Bun server
 CMD ["bun", "run", "dev-server-bun"]
