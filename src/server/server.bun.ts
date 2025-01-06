@@ -9,7 +9,7 @@ import {
 import { loadAsset, storeAsset } from './assets'
 import { makeOrLoadRoom } from './rooms'
 import { unfurl } from './unfurl'
-import { server_schema_default, server_schema_custom } from './schema'
+import { server_schema_default } from './schema'
 import { logger } from './../logger'
 
 const PORT = process.env.PORT_TLDRAW_SYNC
@@ -20,15 +20,15 @@ const router: RouterType<IRequest, any, any> = Router()
   .all('*', preflight)
 
   .get(`/connect/:roomId`, async (req) => {
-    const roomId = req.params.roomId
-    const sessionId = req.query.sessionId
+    const {roomId} = req.params
+    const {sessionId} = req.query
     logger.info(`Connecting to room: ${roomId}, session: ${sessionId}`)
     server.upgrade(req, { data: { roomId, sessionId } })
     return new Response(null, { status: 101 })
   })
 
   .put(`/uploads/:id`, async (req) => {
-    const id = req.params.id;
+    const {id} = req.params;
     logger.info(`Received upload request for ID: ${id}`);
 
     try {
@@ -117,7 +117,7 @@ const server = Bun.serve<{ room?: TLSocketRoom<any, void>; sessionId: string; ro
           return;
         }
         logger.info(`WebSocket opened for room: ${roomId}, session: ${sessionId}`);
-        const room = await makeOrLoadRoom(roomId, server_schema_custom);
+        const room = await makeOrLoadRoom(roomId, server_schema_default);
         if (!room) {
           logger.error('Failed to create or load room', {
             roomId,
