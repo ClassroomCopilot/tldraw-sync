@@ -46,9 +46,8 @@ import { MicrophoneShapeUtil } from '../utils/tldraw/MicrophoneShape/MicrophoneS
 import { TranscriptionTextShapeUtil } from '../utils/tldraw/MicrophoneShape/TranscriptionTextShapeUtil'
 import { SlideShapeUtil, SlideShowShapeUtil } from '../utils/tldraw/slides/SlideShapeUtil'
 
-const server_binding_schema = createTLSchemaFromUtils({
+const slide_layout_binding_schema = createTLSchemaFromUtils({
   bindingUtils: [
-    ...defaultBindingUtils,
     SlideLayoutBindingUtil,
   ],
 })
@@ -233,5 +232,11 @@ export const server_schema_default = createTLSchema({
       migrations: GeneralRelationshipShapeUtil.migrations,
     },
   },
-  bindings: defaultBindingSchemas,
+  bindings: {
+    ...defaultBindingSchemas,
+    'slide-layout': {
+      props: SlideLayoutBindingUtil.props,
+      migrations: SlideLayoutBindingUtil.migrations,
+    }
+  },
 })
