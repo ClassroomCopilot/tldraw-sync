@@ -39,10 +39,6 @@ import {
   GeneralRelationshipShapeUtil
 } from '../utils/tldraw/graph/graphShapeUtil'
 import { YoutubeEmbedShapeUtil } from '../utils/tldraw/embeds/embedShapes'
-import { CalendarShapeUtil } from '../utils/tldraw/calendarShapes/CalendarShapeUtil'
-import { MicrophoneShapeUtil } from '../utils/tldraw/MicrophoneShape/MicrophoneShapeUtil'
-import { TranscriptionTextShapeUtil } from '../utils/tldraw/MicrophoneShape/TranscriptionTextShapeUtil'
-import { SlideShapeUtil, SlideShowShapeUtil } from '../utils/tldraw/slides/SlideShapeUtil'
 
 export const server_schema_default = createTLSchema({
   shapes: {
@@ -70,26 +66,6 @@ export const server_schema_default = createTLSchema({
     'cc-slide': {
       props: ccShapeProps.slide,
       migrations: ccShapeMigrations.slide,
-    },
-    calendar: {
-      props: CalendarShapeUtil.props,
-      migrations: CalendarShapeUtil.migrations,
-    },
-    microphone: {
-      props: MicrophoneShapeUtil.props,
-      migrations: MicrophoneShapeUtil.migrations,
-    },
-    transcriptionText: {
-      props: TranscriptionTextShapeUtil.props,
-      migrations: TranscriptionTextShapeUtil.migrations,
-    },
-    slide: {
-      props: SlideShapeUtil.props,
-      migrations: SlideShapeUtil.migrations,
-    },
-    slideshow: {
-      props: SlideShowShapeUtil.props,
-      migrations: SlideShowShapeUtil.migrations,
     },
     user_node: {
       props: UserNodeShapeUtil.props,
