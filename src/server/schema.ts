@@ -210,5 +210,9 @@ export const server_schema_default = createTLSchema({
   },
   bindings: {
     ...defaultBindingSchemas,
+    'cc-slide-layout': {
+      props: ccBindingProps['cc-slide-layout'],
+      migrations: ccBindingMigrations.slideLayout,
+    },
   },
 })
