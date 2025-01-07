@@ -1,7 +1,6 @@
 import { createTLSchema, defaultShapeSchemas, defaultBindingSchemas } from '@tldraw/tlschema'
-import { ccShapeProps } from '../utils/tldraw/cc-base/cc-props'
-import { ccShapeMigrations } from '../utils/tldraw/cc-base/cc-migrations'
-import { createTLSchemaFromUtils, defaultBindingUtils } from 'tldraw'
+import { ccBindingProps, ccShapeProps } from '../utils/tldraw/cc-base/cc-props'
+import { ccBindingMigrations, ccShapeMigrations } from '../utils/tldraw/cc-base/cc-migrations'
 import {
   UserNodeShapeUtil,
   DeveloperNodeShapeUtil,
@@ -39,18 +38,11 @@ import {
   SubjectClassNodeShapeUtil,
   GeneralRelationshipShapeUtil
 } from '../utils/tldraw/graph/graphShapeUtil'
-import { SlideLayoutBindingUtil } from '../utils/tldraw/slides/SlideLayoutBindingUtil'
 import { YoutubeEmbedShapeUtil } from '../utils/tldraw/embeds/embedShapes'
 import { CalendarShapeUtil } from '../utils/tldraw/calendarShapes/CalendarShapeUtil'
 import { MicrophoneShapeUtil } from '../utils/tldraw/MicrophoneShape/MicrophoneShapeUtil'
 import { TranscriptionTextShapeUtil } from '../utils/tldraw/MicrophoneShape/TranscriptionTextShapeUtil'
 import { SlideShapeUtil, SlideShowShapeUtil } from '../utils/tldraw/slides/SlideShapeUtil'
-
-const slide_layout_binding_schema = createTLSchemaFromUtils({
-  bindingUtils: [
-    SlideLayoutBindingUtil,
-  ],
-})
 
 export const server_schema_default = createTLSchema({
   shapes: {
@@ -70,6 +62,14 @@ export const server_schema_default = createTLSchema({
     'cc-settings': {
       props: ccShapeProps.settings,
       migrations: ccShapeMigrations.settings,
+    },
+    'cc-slideshow': {
+      props: ccShapeProps.slideshow,
+      migrations: ccShapeMigrations.slideshow,
+    },
+    'cc-slide': {
+      props: ccShapeProps.slide,
+      migrations: ccShapeMigrations.slide,
     },
     calendar: {
       props: CalendarShapeUtil.props,
@@ -234,9 +234,5 @@ export const server_schema_default = createTLSchema({
   },
   bindings: {
     ...defaultBindingSchemas,
-    'slide-layout': {
-      props: SlideLayoutBindingUtil.props,
-      migrations: SlideLayoutBindingUtil.migrations,
-    }
   },
 })
