@@ -8,7 +8,6 @@ export interface CCBaseProps {
   h: number
   headerColor: string
   isLocked: boolean
-  opacity: number
 }
 
 // Create a constant for the base props validation
@@ -18,7 +17,6 @@ const baseShapeProps = {
   h: T.number,
   headerColor: T.string,
   isLocked: T.boolean,
-  opacity: T.number,
 }
 
 export const ccShapeProps = {
@@ -107,7 +105,6 @@ export const getDefaultCCBaseProps = () => ({
   h: 100,
   headerColor: '#3e6589',
   isLocked: false,
-  opacity: 1,
 })
 
 export const getDefaultCCCalendarProps = () => ({
