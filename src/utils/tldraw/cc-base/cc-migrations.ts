@@ -1,127 +1,198 @@
-import { createShapeId, createShapePropsMigrationIds, createShapePropsMigrationSequence, createBindingPropsMigrationIds, createBindingPropsMigrationSequence } from 'tldraw'
+import { TLRecord, TLShape } from 'tldraw'
+import { getDefaultCCBaseProps, getDefaultCCCalendarProps, getDefaultCCLiveTranscriptionProps, getDefaultCCSettingsProps, getDefaultCCSlideProps, getDefaultCCSlideShowProps, getDefaultCCSlideLayoutBindingProps, getDefaultCCYoutubeEmbedProps } from './cc-props'
 
-const baseVersions = createShapePropsMigrationIds('cc-base', { Initial: 1 })
-const calendarVersions = createShapePropsMigrationIds('cc-calendar', { Initial: 1 })
-const transcriptionVersions = createShapePropsMigrationIds('cc-live-transcription', { Initial: 1 })
-const settingsVersions = createShapePropsMigrationIds('cc-settings', { Initial: 1 })
-const slideshowVersions = createShapePropsMigrationIds('cc-slideshow', { Initial: 1 })
-const slideVersions = createShapePropsMigrationIds('cc-slide', { Initial: 1 })
-const slideLayoutBindingVersions = createBindingPropsMigrationIds('cc-slide-layout', { Initial: 1 })
-
+// Export both shape and binding migrations
 export const ccBindingMigrations = {
-  'cc-slide-layout': createBindingPropsMigrationSequence({
-    sequence: [
-      {
-        id: slideLayoutBindingVersions.Initial,
-        up: (props) => {
-          if (typeof props.placeholder !== 'boolean') {
-            props.placeholder = false
+  'cc-slide-layout': {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'binding') return record
+          if (record.type !== 'cc-slide-layout') return record
+          return {
+            ...record,
+            props: {
+              ...getDefaultCCSlideLayoutBindingProps(),
+              ...record.props,
+            },
           }
-          if (typeof props.isMovingWithParent !== 'boolean' && props.isMovingWithParent !== undefined) {
-            props.isMovingWithParent = false
-          }
-          return props
+        },
+        down: (record: TLRecord) => {
+          return record
         },
       },
-    ],
-  }),
+    },
+  },
 }
 
 export const ccShapeMigrations = {
-  base: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: baseVersions.Initial,
-        up: (props) => props,
-      },
-    ],
-  }),
-
-  calendar: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: calendarVersions.Initial,
-        up: (props) => {
-          if (!Array.isArray(props.events)) {
-            props.events = []
-          }
-          if (typeof props.date !== 'string') {
-            props.date = new Date().toISOString()
-          }
-          if (typeof props.selectedDate !== 'string') {
-            props.selectedDate = props.date
-          }
-          if (!props.view) {
-            props.view = 'timeGridWeek'
+  base: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-base') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCBaseProps(),
+              ...shape.props,
+            },
           }
         },
-      },
-    ],
-  }),
-
-  liveTranscription: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: transcriptionVersions.Initial,
-        up: (props) => {
-          if (!Array.isArray(props.segments)) {
-            props.segments = []
-          }
-          if (props.segments.length > 0) {
-            props.segments = props.segments.map((segment: { id?: string }) => ({
-              ...segment,
-              id: segment.id || createShapeId(),
-            }))
-          }
+        down: (record: TLRecord) => {
+          return record
         },
       },
-    ],
-  }),
+    },
+  },
 
-  settings: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: settingsVersions.Initial,
-        up: (props) => {
-          if (typeof props.userEmail !== 'string') {
-            props.userEmail = ''
-          }
-          if (typeof props.userRole !== 'string') {
-            props.userRole = ''
-          }
-          if (typeof props.isTeacher !== 'boolean') {
-            props.isTeacher = false
+  calendar: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-calendar') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCCalendarProps(),
+              ...shape.props,
+            },
           }
         },
-      },
-    ],
-  }),
-
-  slideshow: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: slideshowVersions.Initial,
-        up: (props) => {
-          if (!Array.isArray(props.slides)) {
-            props.slides = []
-          }
-          if (typeof props.currentSlideIndex !== 'number') {
-            props.currentSlideIndex = 0
-          }
-          if (typeof props.slidePattern !== 'string') {
-            props.slidePattern = 'horizontal'
-          }
+        down: (record: TLRecord) => {
+          return record
         },
       },
-    ],
-  }),
+    },
+  },
 
-  slide: createShapePropsMigrationSequence({
-    sequence: [
-      {
-        id: slideVersions.Initial,
-        up: (props) => props,
+  liveTranscription: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-live-transcription') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCLiveTranscriptionProps(),
+              ...shape.props,
+            },
+          }
+        },
+        down: (record: TLRecord) => {
+          return record
+        },
       },
-    ],
-  }),
+    },
+  },
+
+  settings: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-settings') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCSettingsProps(),
+              ...shape.props,
+            },
+          }
+        },
+        down: (record: TLRecord) => {
+          return record
+        },
+      },
+    },
+  },
+
+  slideshow: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-slideshow') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCSlideShowProps(),
+              ...shape.props,
+            },
+          }
+        },
+        down: (record: TLRecord) => {
+          return record
+        },
+      },
+    },
+  },
+
+  slide: {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-slide') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCSlideProps(),
+              ...shape.props,
+            },
+          }
+        },
+        down: (record: TLRecord) => {
+          return record
+        },
+      },
+    },
+  },
+
+  'cc-youtube-embed': {
+    firstVersion: 1,
+    currentVersion: 1,
+    migrators: {
+      1: {
+        up: (record: TLRecord) => {
+          if (record.typeName !== 'shape') return record
+          const shape = record as TLShape
+          if (shape.type !== 'cc-youtube-embed') return record
+          return {
+            ...shape,
+            props: {
+              ...getDefaultCCYoutubeEmbedProps(),
+              ...shape.props,
+            },
+          }
+        },
+        down: (record: TLRecord) => {
+          return record
+        },
+      },
+    },
+  },
 } 

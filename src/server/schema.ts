@@ -67,6 +67,10 @@ export const server_schema_default = createTLSchema({
       props: ccShapeProps.slide,
       migrations: ccShapeMigrations.slide,
     },
+    'cc-youtube-embed': {
+      props: ccShapeProps['cc-youtube-embed'],
+      migrations: ccShapeMigrations['cc-youtube-embed'],
+    },
     user_node: {
       props: UserNodeShapeUtil.props,
       migrations: UserNodeShapeUtil.migrations,
