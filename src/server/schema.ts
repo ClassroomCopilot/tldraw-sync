@@ -38,15 +38,10 @@ import {
   SubjectClassNodeShapeUtil,
   GeneralRelationshipShapeUtil
 } from '../utils/tldraw/graph/graphShapeUtil'
-import { YoutubeEmbedShapeUtil } from '../utils/tldraw/embeds/embedShapes'
 
 export const server_schema_default = createTLSchema({
   shapes: {
     ...defaultShapeSchemas,
-    'youtube-embed': {
-      props: YoutubeEmbedShapeUtil.props,
-      migrations: YoutubeEmbedShapeUtil.migrations,
-    },
     'cc-live-transcription': {
       props: ccShapeProps.liveTranscription,
       migrations: ccShapeMigrations.liveTranscription,
