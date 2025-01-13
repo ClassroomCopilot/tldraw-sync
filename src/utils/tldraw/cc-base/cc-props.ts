@@ -1,5 +1,5 @@
 import { T } from 'tldraw'
-import { CC_BASE_STYLE_CONSTANTS } from './cc-styles'
+import { CC_BASE_STYLE_CONSTANTS, CC_SLIDESHOW_STYLE_CONSTANTS } from './cc-styles'
 
 // Define the base props interface
 export interface CCBaseProps {
@@ -104,6 +104,7 @@ export const ccBindingProps = {
   },
   'cc-slide-content-binding': {
     placeholder: T.boolean,
+    isMovingWithParent: T.boolean.optional(),
   },
 }
 
