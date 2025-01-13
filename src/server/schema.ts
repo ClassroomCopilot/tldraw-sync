@@ -62,6 +62,10 @@ export const server_schema_default = createTLSchema({
       props: ccShapeProps.slide,
       migrations: ccShapeMigrations.slide,
     },
+    'cc-slide-content': {
+      props: ccShapeProps.slideContent,
+      migrations: ccShapeMigrations.slideContent,
+    },
     'cc-youtube-embed': {
       props: ccShapeProps['cc-youtube-embed'],
       migrations: ccShapeMigrations['cc-youtube-embed'],
@@ -211,7 +215,11 @@ export const server_schema_default = createTLSchema({
     ...defaultBindingSchemas,
     'cc-slide-layout': {
       props: ccBindingProps['cc-slide-layout'],
-      migrations: ccBindingMigrations.slideLayout,
+      migrations: ccBindingMigrations['cc-slide-layout'],
+    },
+    'cc-slide-content-binding': {
+      props: ccBindingProps['cc-slide-content-binding'],
+      migrations: ccBindingMigrations['cc-slide-content-binding'],
     },
   },
 })
