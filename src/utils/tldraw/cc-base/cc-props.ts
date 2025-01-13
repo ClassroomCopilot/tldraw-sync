@@ -1,5 +1,5 @@
 import { T } from 'tldraw'
-import { CC_BASE_STYLE_CONSTANTS } from './cc-styles'
+import { CC_BASE_STYLE_CONSTANTS, CC_SLIDESHOW_STYLE_CONSTANTS } from './cc-styles'
 
 // Define the base props interface
 export interface CCBaseProps {
@@ -95,6 +95,15 @@ export const ccShapeProps = {
     })),
     transcriptVisible: T.boolean,
   },
+
+  'cc-slide-content-frame': {
+    name: T.string,
+    w: T.number,
+    h: T.number,
+    headerColor: T.string,
+    isLocked: T.boolean,
+    parentSlideId: T.string,
+  }
 }
 
 export const ccBindingProps = {
@@ -195,3 +204,16 @@ export function getDefaultCCSlideContentProps() {
     parentSlideId: '',
   }
 }
+
+export const getDefaultCCSlideContentFrameProps = () => ({
+  name: 'Slide Content Frame',
+  w: CC_SLIDESHOW_STYLE_CONSTANTS.DEFAULT_SLIDE_WIDTH,
+  h: CC_SLIDESHOW_STYLE_CONSTANTS.DEFAULT_SLIDE_HEIGHT - CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT,
+  headerColor: CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_COLORS.background,
+  isLocked: false,
+  parentSlideId: '',
+})
+
+export const getDefaultCCSlideContentBindingProps = () => ({
+  placeholder: false,
+})
