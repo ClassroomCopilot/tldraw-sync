@@ -1,5 +1,5 @@
 import { TLRecord, TLShape } from 'tldraw'
-import { getDefaultCCBaseProps, getDefaultCCCalendarProps, getDefaultCCLiveTranscriptionProps, getDefaultCCSettingsProps, getDefaultCCSlideProps, getDefaultCCSlideShowProps, getDefaultCCYoutubeEmbedProps, getDefaultCCSlideContentProps, getDefaultCCSlideContentFrameProps, getDefaultCCSlideContentBindingProps } from './cc-props'
+import { getDefaultCCBaseProps, getDefaultCCCalendarProps, getDefaultCCLiveTranscriptionProps, getDefaultCCSettingsProps, getDefaultCCSlideProps, getDefaultCCSlideShowProps, getDefaultCCSlideLayoutBindingProps, getDefaultCCYoutubeEmbedProps, getDefaultCCSlideContentProps } from './cc-props'
 
 // Export both shape and binding migrations
 export const ccBindingMigrations = {
@@ -14,7 +14,7 @@ export const ccBindingMigrations = {
           return {
             ...record,
             props: {
-              placeholder: false,
+              ...getDefaultCCSlideLayoutBindingProps(),
               ...record.props,
             },
           }
@@ -36,7 +36,7 @@ export const ccBindingMigrations = {
           return {
             ...record,
             props: {
-              ...getDefaultCCSlideContentBindingProps(),
+              placeholder: false,
               ...record.props,
             },
           }
@@ -194,30 +194,6 @@ export const ccShapeMigrations = {
     },
   },
 
-  slideContent: {
-    firstVersion: 1,
-    currentVersion: 1,
-    migrators: {
-      1: {
-        up: (record: TLRecord) => {
-          if (record.typeName !== 'shape') return record
-          const shape = record as TLShape
-          if (shape.type !== 'cc-slide-content') return record
-          return {
-            ...shape,
-            props: {
-              ...getDefaultCCSlideContentProps(),
-              ...shape.props,
-            },
-          }
-        },
-        down: (record: TLRecord) => {
-          return record
-        },
-      },
-    },
-  },
-
   'cc-youtube-embed': {
     firstVersion: 1,
     currentVersion: 1,
@@ -242,7 +218,7 @@ export const ccShapeMigrations = {
     },
   },
 
-  'cc-slide-content-frame': {
+  slideContent: {
     firstVersion: 1,
     currentVersion: 1,
     migrators: {
@@ -250,11 +226,11 @@ export const ccShapeMigrations = {
         up: (record: TLRecord) => {
           if (record.typeName !== 'shape') return record
           const shape = record as TLShape
-          if (shape.type !== 'cc-slide-content-frame') return record
+          if (shape.type !== 'cc-slide-content') return record
           return {
             ...shape,
             props: {
-              ...getDefaultCCSlideContentFrameProps(),
+              ...getDefaultCCSlideContentProps(),
               ...shape.props,
             },
           }
