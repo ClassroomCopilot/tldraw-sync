@@ -71,7 +71,6 @@ export const ccShapeProps = {
 
   slideshow: {
     ...baseShapeProps,
-    slides: T.arrayOf(T.string),
     currentSlideIndex: T.number,
     slidePattern: T.string,
   },
@@ -95,6 +94,8 @@ export const ccShapeProps = {
 export const ccBindingProps = {
   'cc-slide-layout': {
     isMovingWithParent: T.boolean.optional(),
+    placeholder: T.boolean.optional(),
+    index: T.string
   },
 }
 
@@ -116,7 +117,6 @@ export const getDefaultCCCalendarProps = () => ({
 
 export const getDefaultCCLiveTranscriptionProps = () => ({
   ...getDefaultCCBaseProps(),
-  isRecording: false,
   segments: [],
   currentSegment: undefined,
   lastProcessedSegment: '',
@@ -136,7 +136,6 @@ export function getDefaultCCSlideShowProps() {
     h: 600,
     headerColor: '#3e6589',
     isLocked: false,
-    slides: [],
     currentSlideIndex: 0,
     slidePattern: 'horizontal',
   }
@@ -155,6 +154,8 @@ export function getDefaultCCSlideProps() {
 export function getDefaultCCSlideLayoutBindingProps() {
   return {
     isMovingWithParent: false,
+    placeholder: false,
+    index: '0'
   }
 }
 
