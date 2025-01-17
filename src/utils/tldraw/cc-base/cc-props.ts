@@ -1,5 +1,5 @@
 import { T } from 'tldraw'
-import { CC_BASE_STYLE_CONSTANTS } from './cc-styles'
+import { CC_BASE_STYLE_CONSTANTS, CC_SLIDESHOW_STYLE_CONSTANTS } from './cc-styles'
 
 // Define the base props interface
 export interface CCBaseProps {
@@ -73,10 +73,12 @@ export const ccShapeProps = {
     ...baseShapeProps,
     currentSlideIndex: T.number,
     slidePattern: T.string,
+    numSlides: T.number,
   },
 
   slide: {
     ...baseShapeProps,
+    imageData: T.string,
   },
 
   'cc-youtube-embed': {
@@ -130,22 +132,35 @@ export const getDefaultCCSettingsProps = () => ({
 })
 
 export function getDefaultCCSlideShowProps() {
+  // Base 16:9 ratio dimensions
+  const baseWidth = 1280
+  const baseHeight = 720
+  // Add header height
+  const totalHeight = baseHeight + CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT
+  
   return {
     title: 'Slideshow',
-    w: 800,
-    h: 600,
+    w: baseWidth,
+    h: totalHeight,
     headerColor: '#3e6589',
     isLocked: false,
     currentSlideIndex: 0,
     slidePattern: 'horizontal',
+    numSlides: 3,
   }
 }
 
 export function getDefaultCCSlideProps() {
+  // Base 16:9 ratio dimensions
+  const baseWidth = 1280
+  const baseHeight = 720
+  // Add header height
+  const totalHeight = baseHeight + CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT
+  
   return {
     title: 'Slide',
-    w: 800,
-    h: 600,
+    w: baseWidth,
+    h: totalHeight,
     headerColor: '#3e6589',
     isLocked: false,
   }
@@ -155,7 +170,7 @@ export function getDefaultCCSlideLayoutBindingProps() {
   return {
     isMovingWithParent: false,
     placeholder: false,
-    index: '0'
+    index: '0',
   }
 }
 
