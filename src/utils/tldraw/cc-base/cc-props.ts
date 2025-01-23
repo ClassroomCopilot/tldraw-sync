@@ -79,6 +79,10 @@ export const ccShapeProps = {
   slide: {
     ...baseShapeProps,
     imageData: T.string,
+    meta: T.object({
+      text: T.string,
+      format: T.string,
+    }),
   },
 
   'cc-youtube-embed': {
@@ -119,9 +123,10 @@ export const getDefaultCCCalendarProps = () => ({
 
 export const getDefaultCCLiveTranscriptionProps = () => ({
   ...getDefaultCCBaseProps(),
+  isRecording: false,
   segments: [],
   currentSegment: undefined,
-  lastProcessedSegment: '',
+  lastProcessedSegment: undefined,
 })
 
 export const getDefaultCCSettingsProps = () => ({
@@ -135,8 +140,11 @@ export function getDefaultCCSlideShowProps() {
   // Base 16:9 ratio dimensions
   const baseWidth = 1280
   const baseHeight = 720
-  // Add header height
-  const totalHeight = baseHeight + CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT
+  // Add header height and spacing
+  const totalHeight = baseHeight + 
+  CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT + // Slideshow's own header
+  CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_SPACING * 2 + // Top and bottom spacing
+  CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_CONTENT_PADDING // Extra padding for content
   
   return {
     title: 'Slideshow',
@@ -155,7 +163,7 @@ export function getDefaultCCSlideProps() {
   const baseWidth = 1280
   const baseHeight = 720
   // Add header height
-  const totalHeight = baseHeight + CC_SLIDESHOW_STYLE_CONSTANTS.SLIDE_HEADER_HEIGHT
+  const totalHeight = baseHeight + CC_BASE_STYLE_CONSTANTS.HEADER.height
   
   return {
     title: 'Slide',
@@ -163,6 +171,11 @@ export function getDefaultCCSlideProps() {
     h: totalHeight,
     headerColor: '#3e6589',
     isLocked: false,
+    imageData: '',
+    meta: {
+      text: '',
+      format: 'markdown'
+    }
   }
 }
 
