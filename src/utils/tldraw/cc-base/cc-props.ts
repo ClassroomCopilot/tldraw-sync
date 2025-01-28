@@ -1,21 +1,22 @@
 import { T } from 'tldraw'
 import { CC_BASE_STYLE_CONSTANTS, CC_SLIDESHOW_STYLE_CONSTANTS } from './cc-styles'
 
-// Define the base props interface
 export interface CCBaseProps {
   title: string
   w: number
   h: number
   headerColor: string
+  backgroundColor: string
   isLocked: boolean
 }
 
 // Create a constant for the base props validation
-const baseShapeProps = {
+export const baseShapeProps = {
   title: T.string,
   w: T.number,
   h: T.number,
   headerColor: T.string,
+  backgroundColor: T.string,
   isLocked: T.boolean,
 }
 
@@ -110,6 +111,7 @@ export const getDefaultCCBaseProps = () => ({
   w: 100,
   h: 100,
   headerColor: '#3e6589',
+  backgroundColor: '#0f0f0f',
   isLocked: false,
 })
 
@@ -151,6 +153,7 @@ export function getDefaultCCSlideShowProps() {
     w: baseWidth,
     h: totalHeight,
     headerColor: '#3e6589',
+    backgroundColor: '#0f0f0f',
     isLocked: false,
     currentSlideIndex: 0,
     slidePattern: 'horizontal',
@@ -170,6 +173,7 @@ export function getDefaultCCSlideProps() {
     w: baseWidth,
     h: totalHeight,
     headerColor: '#3e6589',
+    backgroundColor: '#0f0f0f',
     isLocked: false,
     imageData: '',
     meta: {
@@ -197,6 +201,7 @@ export function getDefaultCCYoutubeEmbedProps() {
     w: 800,
     h: totalHeight,
     headerColor: '#ff0000',
+    backgroundColor: '#0f0f0f',
     isLocked: false,
     video_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     transcript: [],

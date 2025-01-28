@@ -1,43 +1,8 @@
 import { createTLSchema, defaultShapeSchemas, defaultBindingSchemas } from '@tldraw/tlschema'
 import { ccBindingProps, ccShapeProps } from '../utils/tldraw/cc-base/cc-props'
 import { ccBindingMigrations, ccShapeMigrations } from '../utils/tldraw/cc-base/cc-migrations'
-import {
-  UserNodeShapeUtil,
-  DeveloperNodeShapeUtil,
-  TeacherNodeShapeUtil,
-  CalendarNodeShapeUtil,
-  CalendarYearNodeShapeUtil,
-  CalendarMonthNodeShapeUtil,
-  CalendarWeekNodeShapeUtil,
-  CalendarDayNodeShapeUtil,
-  CalendarTimeChunkNodeShapeUtil,
-  TeacherTimetableNodeShapeUtil,
-  TimetableLessonNodeShapeUtil,
-  PlannedLessonNodeShapeUtil,
-  PastoralStructureNodeShapeUtil,
-  YearGroupNodeShapeUtil,
-  CurriculumStructureNodeShapeUtil,
-  KeyStageNodeShapeUtil,
-  KeyStageSyllabusNodeShapeUtil,
-  YearGroupSyllabusNodeShapeUtil,
-  SubjectNodeShapeUtil,
-  TopicNodeShapeUtil,
-  TopicLessonNodeShapeUtil,
-  LearningStatementNodeShapeUtil,
-  ScienceLabNodeShapeUtil,
-  SchoolTimetableNodeShapeUtil,
-  AcademicYearNodeShapeUtil,
-  AcademicTermNodeShapeUtil,
-  AcademicWeekNodeShapeUtil,
-  AcademicDayNodeShapeUtil,
-  AcademicPeriodNodeShapeUtil,
-  RegistrationPeriodNodeShapeUtil,
-  SchoolNodeShapeUtil,
-  DepartmentNodeShapeUtil,
-  RoomNodeShapeUtil,
-  SubjectClassNodeShapeUtil,
-  GeneralRelationshipShapeUtil
-} from '../utils/tldraw/graph/graphShapeUtil'
+import { ccGraphShapeProps } from '../utils/tldraw/cc-base/cc-graph-props'
+import { ccGraphMigrations } from '../utils/tldraw/cc-base/cc-graph-migrations'
 
 export const server_schema_default = createTLSchema({
   shapes: {
@@ -66,145 +31,142 @@ export const server_schema_default = createTLSchema({
       props: ccShapeProps['cc-youtube-embed'],
       migrations: ccShapeMigrations['cc-youtube-embed'],
     },
-    user_node: {
-      props: UserNodeShapeUtil.props,
-      migrations: UserNodeShapeUtil.migrations,
+    // Graph shapes
+    'cc-user-node': {
+      props: ccGraphShapeProps['cc-user-node'],
+      migrations: ccGraphMigrations['cc-user-node'],
     },
-    developer_node: {
-      props: DeveloperNodeShapeUtil.props,
-      migrations: DeveloperNodeShapeUtil.migrations,
+    'cc-teacher-node': {
+      props: ccGraphShapeProps['cc-teacher-node'],
+      migrations: ccGraphMigrations['cc-teacher-node'],
     },
-    teacher_node: {
-      props: TeacherNodeShapeUtil.props,
-      migrations: TeacherNodeShapeUtil.migrations,
+    'cc-student-node': {
+      props: ccGraphShapeProps['cc-student-node'],
+      migrations: ccGraphMigrations['cc-student-node'],
     },
-    calendar_node: {
-      props: CalendarNodeShapeUtil.props,
-      migrations: CalendarNodeShapeUtil.migrations,
+    'cc-calendar-node': {
+      props: ccGraphShapeProps['cc-calendar-node'],
+      migrations: ccGraphMigrations['cc-calendar-node'],
     },
-    calendar_year_node: {
-      props: CalendarYearNodeShapeUtil.props,
-      migrations: CalendarYearNodeShapeUtil.migrations,
+    'cc-calendar-year-node': {
+      props: ccGraphShapeProps['cc-calendar-year-node'],
+      migrations: ccGraphMigrations['cc-calendar-year-node'],
     },
-    calendar_month_node: {
-      props: CalendarMonthNodeShapeUtil.props,
-      migrations: CalendarMonthNodeShapeUtil.migrations,
+    'cc-calendar-month-node': {
+      props: ccGraphShapeProps['cc-calendar-month-node'],
+      migrations: ccGraphMigrations['cc-calendar-month-node'],
     },
-    calendar_week_node: {
-      props: CalendarWeekNodeShapeUtil.props,
-      migrations: CalendarWeekNodeShapeUtil.migrations,
+    'cc-calendar-week-node': {
+      props: ccGraphShapeProps['cc-calendar-week-node'],
+      migrations: ccGraphMigrations['cc-calendar-week-node'],
     },
-    calendar_day_node: {
-      props: CalendarDayNodeShapeUtil.props,
-      migrations: CalendarDayNodeShapeUtil.migrations,
+    'cc-calendar-day-node': {
+      props: ccGraphShapeProps['cc-calendar-day-node'],
+      migrations: ccGraphMigrations['cc-calendar-day-node'],
     },
-    calendar_time_chunk_node: {
-      props: CalendarTimeChunkNodeShapeUtil.props,
-      migrations: CalendarTimeChunkNodeShapeUtil.migrations,
+    'cc-calendar-time-chunk-node': {
+      props: ccGraphShapeProps['cc-calendar-time-chunk-node'],
+      migrations: ccGraphMigrations['cc-calendar-time-chunk-node'],
     },
-    school_timetable_node: {
-      props: SchoolTimetableNodeShapeUtil.props,
-      migrations: SchoolTimetableNodeShapeUtil.migrations,
+    'cc-school-node': {
+      props: ccGraphShapeProps['cc-school-node'],
+      migrations: ccGraphMigrations['cc-school-node'],
     },
-    academic_year_node: {
-      props: AcademicYearNodeShapeUtil.props,
-      migrations: AcademicYearNodeShapeUtil.migrations,
+    'cc-department-node': {
+      props: ccGraphShapeProps['cc-department-node'],
+      migrations: ccGraphMigrations['cc-department-node'],
     },
-    academic_term_node: {
-      props: AcademicTermNodeShapeUtil.props,
-      migrations: AcademicTermNodeShapeUtil.migrations,
+    'cc-room-node': {
+      props: ccGraphShapeProps['cc-room-node'],
+      migrations: ccGraphMigrations['cc-room-node'],
     },
-    academic_week_node: {
-      props: AcademicWeekNodeShapeUtil.props,
-      migrations: AcademicWeekNodeShapeUtil.migrations,
+    'cc-subject-class-node': {
+      props: ccGraphShapeProps['cc-subject-class-node'],
+      migrations: ccGraphMigrations['cc-subject-class-node'],
     },
-    academic_day_node: {
-      props: AcademicDayNodeShapeUtil.props,
-      migrations: AcademicDayNodeShapeUtil.migrations,
+    'cc-pastoral-structure-node': {
+      props: ccGraphShapeProps['cc-pastoral-structure-node'],
+      migrations: ccGraphMigrations['cc-pastoral-structure-node'],
     },
-    academic_period_node: {
-      props: AcademicPeriodNodeShapeUtil.props,
-      migrations: AcademicPeriodNodeShapeUtil.migrations,
+    'cc-year-group-node': {
+      props: ccGraphShapeProps['cc-year-group-node'],
+      migrations: ccGraphMigrations['cc-year-group-node'],
     },
-    registration_period_node: {
-      props: RegistrationPeriodNodeShapeUtil.props,
-      migrations: RegistrationPeriodNodeShapeUtil.migrations,
+    'cc-curriculum-structure-node': {
+      props: ccGraphShapeProps['cc-curriculum-structure-node'],
+      migrations: ccGraphMigrations['cc-curriculum-structure-node'],
     },
-    school_node: {
-      props: SchoolNodeShapeUtil.props,
-      migrations: SchoolNodeShapeUtil.migrations,
+    'cc-key-stage-node': {
+      props: ccGraphShapeProps['cc-key-stage-node'],
+      migrations: ccGraphMigrations['cc-key-stage-node'],
     },
-    subject_class_node: {
-      props: SubjectClassNodeShapeUtil.props,
-      migrations: SubjectClassNodeShapeUtil.migrations,
+    'cc-key-stage-syllabus-node': {
+      props: ccGraphShapeProps['cc-key-stage-syllabus-node'],
+      migrations: ccGraphMigrations['cc-key-stage-syllabus-node'],
     },
-    department_node: {
-      props: DepartmentNodeShapeUtil.props,
-      migrations: DepartmentNodeShapeUtil.migrations,
+    'cc-year-group-syllabus-node': {
+      props: ccGraphShapeProps['cc-year-group-syllabus-node'],
+      migrations: ccGraphMigrations['cc-year-group-syllabus-node'],
     },
-    room_node: {
-      props: RoomNodeShapeUtil.props,
-      migrations: RoomNodeShapeUtil.migrations,
+    'cc-subject-node': {
+      props: ccGraphShapeProps['cc-subject-node'],
+      migrations: ccGraphMigrations['cc-subject-node'],
     },
-    pastoral_structure_node: {
-      props: PastoralStructureNodeShapeUtil.props,
-      migrations: PastoralStructureNodeShapeUtil.migrations,
+    'cc-topic-node': {
+      props: ccGraphShapeProps['cc-topic-node'],
+      migrations: ccGraphMigrations['cc-topic-node'],
     },
-    curriculum_structure_node: {
-      props: CurriculumStructureNodeShapeUtil.props,
-      migrations: CurriculumStructureNodeShapeUtil.migrations,
+    'cc-topic-lesson-node': {
+      props: ccGraphShapeProps['cc-topic-lesson-node'],
+      migrations: ccGraphMigrations['cc-topic-lesson-node'],
     },
-    key_stage_node: {
-      props: KeyStageNodeShapeUtil.props,
-      migrations: KeyStageNodeShapeUtil.migrations,
+    'cc-learning-statement-node': {
+      props: ccGraphShapeProps['cc-learning-statement-node'],
+      migrations: ccGraphMigrations['cc-learning-statement-node'],
     },
-    key_stage_syllabus_node: {
-      props: KeyStageSyllabusNodeShapeUtil.props,
-      migrations: KeyStageSyllabusNodeShapeUtil.migrations,
+    'cc-science-lab-node': {
+      props: ccGraphShapeProps['cc-science-lab-node'],
+      migrations: ccGraphMigrations['cc-science-lab-node'],
     },
-    year_group_node: {
-      props: YearGroupNodeShapeUtil.props,
-      migrations: YearGroupNodeShapeUtil.migrations,
+    'cc-teacher-timetable-node': {
+      props: ccGraphShapeProps['cc-teacher-timetable-node'],
+      migrations: ccGraphMigrations['cc-teacher-timetable-node'],
     },
-    year_group_syllabus_node: {
-      props: YearGroupSyllabusNodeShapeUtil.props,
-      migrations: YearGroupSyllabusNodeShapeUtil.migrations,
+    'cc-timetable-lesson-node': {
+      props: ccGraphShapeProps['cc-timetable-lesson-node'],
+      migrations: ccGraphMigrations['cc-timetable-lesson-node'],
     },
-    subject_node: {
-      props: SubjectNodeShapeUtil.props,
-      migrations: SubjectNodeShapeUtil.migrations,
+    'cc-planned-lesson-node': {
+      props: ccGraphShapeProps['cc-planned-lesson-node'],
+      migrations: ccGraphMigrations['cc-planned-lesson-node'],
     },
-    topic_node: {
-      props: TopicNodeShapeUtil.props,
-      migrations: TopicNodeShapeUtil.migrations,
+    'cc-school-timetable-node': {
+      props: ccGraphShapeProps['cc-school-timetable-node'],
+      migrations: ccGraphMigrations['cc-school-timetable-node'],
     },
-    topic_lesson_node: {
-      props: TopicLessonNodeShapeUtil.props,
-      migrations: TopicLessonNodeShapeUtil.migrations,
+    'cc-academic-year-node': {
+      props: ccGraphShapeProps['cc-academic-year-node'],
+      migrations: ccGraphMigrations['cc-academic-year-node'],
     },
-    learning_statement_node: {
-      props: LearningStatementNodeShapeUtil.props,
-      migrations: LearningStatementNodeShapeUtil.migrations,
+    'cc-academic-term-node': {
+      props: ccGraphShapeProps['cc-academic-term-node'],
+      migrations: ccGraphMigrations['cc-academic-term-node'],
     },
-    science_lab_node: {
-      props: ScienceLabNodeShapeUtil.props,
-      migrations: ScienceLabNodeShapeUtil.migrations,
+    'cc-academic-week-node': {
+      props: ccGraphShapeProps['cc-academic-week-node'],
+      migrations: ccGraphMigrations['cc-academic-week-node'],
     },
-    teacher_timetable_node: {
-      props: TeacherTimetableNodeShapeUtil.props,
-      migrations: TeacherTimetableNodeShapeUtil.migrations,
+    'cc-academic-day-node': {
+      props: ccGraphShapeProps['cc-academic-day-node'],
+      migrations: ccGraphMigrations['cc-academic-day-node'],
     },
-    timetable_lesson_node: {
-      props: TimetableLessonNodeShapeUtil.props,
-      migrations: TimetableLessonNodeShapeUtil.migrations,
+    'cc-academic-period-node': {
+      props: ccGraphShapeProps['cc-academic-period-node'],
+      migrations: ccGraphMigrations['cc-academic-period-node'],
     },
-    planned_lesson_node: {
-      props: PlannedLessonNodeShapeUtil.props,
-      migrations: PlannedLessonNodeShapeUtil.migrations,
-    },
-    general_relationship: {
-      props: GeneralRelationshipShapeUtil.props,
-      migrations: GeneralRelationshipShapeUtil.migrations,
+    'cc-registration-period-node': {
+      props: ccGraphShapeProps['cc-registration-period-node'],
+      migrations: ccGraphMigrations['cc-registration-period-node'],
     },
   },
   bindings: {
