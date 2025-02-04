@@ -168,6 +168,14 @@ export const server_schema_default = createTLSchema({
       props: ccGraphShapeProps['cc-registration-period-node'],
       migrations: ccGraphMigrations['cc-registration-period-node'],
     },
+    'cc-user-teacher-timetable-node': {
+      props: ccGraphShapeProps['cc-user-teacher-timetable-node'],
+      migrations: ccGraphMigrations['cc-user-teacher-timetable-node'],
+    },
+    'cc-user-timetable-lesson-node': {
+      props: ccGraphShapeProps['cc-user-timetable-lesson-node'],
+      migrations: ccGraphMigrations['cc-user-timetable-lesson-node'],
+    },
   },
   bindings: {
     ...defaultBindingSchemas,
