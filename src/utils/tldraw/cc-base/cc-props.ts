@@ -75,6 +75,13 @@ export const ccShapeProps = {
     currentSlideIndex: T.number,
     slidePattern: T.string,
     numSlides: T.number,
+    slides: T.arrayOf(T.object({
+      imageData: T.string,
+      meta: T.object({
+        text: T.string,
+        format: T.string,
+      }),
+    })).optional(),
   },
 
   slide: {
