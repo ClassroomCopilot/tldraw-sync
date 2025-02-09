@@ -7,6 +7,10 @@ import { ccGraphMigrations } from '../utils/tldraw/cc-base/cc-graph-migrations'
 export const server_schema_default = createTLSchema({
   shapes: {
     ...defaultShapeSchemas,
+    'cc-base': {
+      props: ccShapeProps.base,
+      migrations: ccShapeMigrations.base,
+    },
     'cc-live-transcription': {
       props: ccShapeProps.liveTranscription,
       migrations: ccShapeMigrations.liveTranscription,
@@ -26,6 +30,14 @@ export const server_schema_default = createTLSchema({
     'cc-slide': {
       props: ccShapeProps.slide,
       migrations: ccShapeMigrations.slide,
+    },
+    'cc-web-browser': {
+      props: ccShapeProps.webBrowser,
+      migrations: ccShapeMigrations.webBrowser,
+    },
+    'cc-search': {
+      props: ccShapeProps.search,
+      migrations: ccShapeMigrations.search,
     },
     'cc-youtube-embed': {
       props: ccShapeProps['cc-youtube-embed'],

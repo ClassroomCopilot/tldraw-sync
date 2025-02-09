@@ -103,6 +103,25 @@ export const ccShapeProps = {
     })),
     transcriptVisible: T.boolean,
   },
+
+  search: {
+    ...baseShapeProps,
+    query: T.string,
+    results: T.arrayOf(T.object({
+      title: T.string,
+      url: T.string,
+      content: T.string,
+    })),
+    isSearching: T.boolean,
+  },
+
+  webBrowser: {
+    ...baseShapeProps,
+    url: T.string,
+    history: T.arrayOf(T.string),
+    currentHistoryIndex: T.number,
+    isLoading: T.boolean,
+  },
 }
 
 export const ccBindingProps = {
@@ -118,7 +137,7 @@ export const getDefaultCCBaseProps = () => ({
   w: 100,
   h: 100,
   headerColor: '#3e6589',
-  backgroundColor: '#0f0f0f',
+  backgroundColor: '#ffffff',
   isLocked: false,
 })
 
@@ -165,6 +184,7 @@ export function getDefaultCCSlideShowProps() {
     currentSlideIndex: 0,
     slidePattern: 'horizontal',
     numSlides: 3,
+    slides: [],
   }
 }
 
@@ -215,3 +235,28 @@ export function getDefaultCCYoutubeEmbedProps() {
     transcriptVisible: false,
   }
 }
+
+export const getDefaultCCSearchProps = () => ({
+  ...getDefaultCCBaseProps(),
+  w: 400,
+  h: 500,
+  title: 'Search',
+  headerColor: '#1a73e8',
+  backgroundColor: '#ffffff',
+  query: '',
+  results: [],
+  isSearching: false,
+})
+
+export const getDefaultCCWebBrowserProps = () => ({
+  ...getDefaultCCBaseProps(),
+  title: 'Web Browser',
+  w: 800,
+  h: 600,
+  headerColor: '#1a73e8',
+  backgroundColor: '#ffffff',
+  url: '',
+  history: [],
+  currentHistoryIndex: -1,
+  isLoading: false,
+})
