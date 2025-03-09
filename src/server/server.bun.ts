@@ -12,7 +12,18 @@ import { unfurl } from './unfurl'
 import { server_schema_default } from './schema'
 import { logger } from './../logger'
 
-const PORT = process.env.PORT_TLDRAW_SYNC
+// Add debug logging for environment variables
+logger.info('Environment variables:', {
+  PORT: process.env.PORT,
+  PORT_TLDRAW_SYNC: process.env.PORT_TLDRAW_SYNC,
+  NODE_ENV: process.env.NODE_ENV
+});
+
+// Be explicit about port precedence
+const PORT = process.env.PORT_TLDRAW_SYNC || 5002
+
+// Log the port being used
+logger.info(`Using port: ${PORT}`)
 
 const { corsify, preflight } = cors({ origin: '*' })
 
@@ -89,9 +100,10 @@ const router: RouterType<IRequest, any, any> = Router()
   })
 
 const server = Bun.serve<{ room?: TLSocketRoom<any, void>; sessionId: string; roomId: string }>({
-  port: PORT,
+  port: parseInt(PORT as string),  // Ensure it's parsed as a number
   fetch(req) {
     try {
+      logger.info(`Server started on port: ${PORT}`)  // Add explicit port logging
       logger.info('Received request: ', req.url)
       return router.fetch(req).then(corsify)
     } catch (e) {
@@ -172,6 +184,12 @@ const server = Bun.serve<{ room?: TLSocketRoom<any, void>; sessionId: string; ro
       }
     },
   },
+})
+
+// Add explicit logging of the server configuration
+logger.info('Server configuration:', {
+  port: server.port,
+  hostname: server.hostname
 })
 
 logger.info(`Listening for connections on URL: ${server.url}`)

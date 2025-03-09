@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # Use a base image with node and build essentials
 FROM node:20-buster
 
@@ -15,12 +17,6 @@ WORKDIR /app
 # Copy package files first
 COPY package*.json ./
 
-# Create bunfig.toml with proper JSX configuration
-RUN echo '[runtime]' > bunfig.toml && \
-    echo 'jsx = "react"' >> bunfig.toml && \
-    echo 'jsx-runtime = "automatic"' >> bunfig.toml && \
-    echo 'jsx-import-source = "react"' >> bunfig.toml
-
 # Install dependencies using bun
 RUN bun install
 
@@ -30,11 +26,11 @@ COPY . .
 # Create logs directory
 RUN mkdir -p /app/logs && chmod 777 /app/logs
 
-# Expose the port the app runs on
-EXPOSE ${PORT_TLDRAW_SYNC}
+# Expose port 5002 explicitly
+EXPOSE 5002
 
 # Set environment variables
 ENV LOG_PATH=/app/logs
 
-# Command to run the Bun server
+# Use npm/bun scripts to run the server
 CMD ["bun", "run", "dev-server-bun"]
